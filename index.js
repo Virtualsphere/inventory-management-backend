@@ -1,11 +1,14 @@
 const express = require('express');
 const cors = require('cors');
 const dotenv = require('dotenv');
-const authRoutes = require('./routes/authRoutes')
+const authRoutes = require('./routes/authRoutes');
+const excelRoute = require('./routes/excelRoutes');
+const superRoute = require('./routes/superAdminRoute');
 
 dotenv.config({});
 
 require("./db/db")
+require("./db/exceldb");
 const app = express();
 
 app.use(cors({
@@ -22,7 +25,8 @@ app.get('/',async(req,res)=>{
 
 //api
 app.use('/auth',authRoutes);
-
+app.use('/api',excelRoute);
+app.use('/api',superRoute);
 
 const PORT = process.env.PORT
 app.listen(PORT,()=>{
